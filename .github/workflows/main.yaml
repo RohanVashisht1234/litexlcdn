@@ -28,6 +28,8 @@ jobs:
         run: rm -rf ./colors/robotGeneratedScreenshots
       - name: Make the images directory for the python's output
         run: mkdir ./colors/robotGeneratedScreenshots
+      - name: Make the images directory for the python's output
+        run: mkdir ./colors/robotGeneratedPreviewColors
       - name: Call python code
         run: python3 ./robots/create_preview_screenshots.py
       - name: Generate table with `lpm`
