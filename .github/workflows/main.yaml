@@ -20,16 +20,16 @@ jobs:
         run: pip install lupa
       - name: Install lpm
         run: wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O ./lpm-latest && chmod +x ./lpm-latest
+      - name: remove colors
+        run: rm -rf ./colors
+      - name: remove colors
+        run: mkdir ./colors
       - name: Generate lua files inside the directory parsers
         run: ./lpm-latest --userdir ./colors color install '*'
       - name: Rename it
         run: mv colors/colors colors/src
-      - name: Remove the images directory if it exists
-        run: rm -rf ./colors/robotGeneratedScreenshots
       - name: Make the images directory for the python's output
         run: mkdir ./colors/robotGeneratedScreenshots
-      - name: Remove the previews directory if it exists
-        run: rm -rf ./colors/robotGeneratedPreviewColors
       - name: Make the images directory for the python's output
         run: mkdir ./colors/robotGeneratedPreviewColors
       - name: Call python code
