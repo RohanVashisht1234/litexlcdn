@@ -34,6 +34,10 @@ jobs:
         run: python3 ./robots/create_preview_screenshots.py
       - name: Generate table with `lpm`
         run: ./lpm-latest exec robots/make_preview_image.lua colors/src/*
+      - name: Generate lua files inside the directory parsers
+        run: ./lpm-latest --userdir ./plugins plugin install '*'
+      - name: Rename it
+        run: mv plugins/plugins plugins/src
       - name: Clean up lpm-latest executable
         run: rm ./lpm-latest
       - name: Clean up lpm directorie
