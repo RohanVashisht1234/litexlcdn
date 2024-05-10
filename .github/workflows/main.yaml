@@ -37,7 +37,7 @@ jobs:
       - name: Generate table with `lpm`
         run: ./lpm-latest exec robots/make_preview_image.lua colors/src/*
       - name: Generate lua files inside the directory parsers
-        run: ./lpm-latest --userdir ./plugins plugin install '*'
+        run: ./lpm-latest --userdir ./plugins plugin install '*' -y
       - name: Rename it
         run: mv plugins/plugins plugins/src
       - name: Clean up lpm-latest executable
