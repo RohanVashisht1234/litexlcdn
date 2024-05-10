@@ -30,10 +30,10 @@ jobs:
         run: mkdir ./colors/robotGeneratedScreenshots
       - name: Call python code
         run: python3 ./robots/create_preview_screenshots.py
-      - name: Clean up lpm directorie
-        run: rm -rf ./lpm
       - name: Clean up lpm-latest executable
         run: rm ./lpm-latest
+      - name: Clean up lpm directorie
+        run: rm -rf ./colors/lpm
       - name: Generate table with `lpm`
         run: ./lpm-latest exec robots/make_preview_image.lua colors/src/*
       - name: Config email
