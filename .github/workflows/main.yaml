@@ -23,7 +23,7 @@ jobs:
       - name: Generate lua files inside the directory parsers
         run: ./lpm-latest --userdir ./colors color install '*'
       - name: Rename it
-        run: mv ./colors/colors ./colors/src
+        run: mv colors/colors colors/src
       - name: Remove the images directory if it exists
         run: rm -rf ./colors/robotGeneratedScreenshots
       - name: Make the images directory for the python's output
@@ -34,6 +34,8 @@ jobs:
         run: rm -rf ./lpm
       - name: Clean up lpm-latest executable
         run: rm ./lpm-latest
+      - name: Generate table with `lpm`
+        run: ./lpm-latest exec robots/make_preview_image.lua colors/src/*
       - name: Config email
         run: git config --global user.name "Github Actions" && git config --global user.email "<>"
       - name: pull
@@ -44,16 +46,3 @@ jobs:
         run: git commit -m '[CI] Updated images'
       - name: Push changes
         run: git push
-  generate_previews:
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@v2
-        - name: Generate table with `lpm`
-          run: |
-            wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm-latest && chmod +x lpm-latest
-            ./lpm-latest exec robots/make_preview_image.lua colors/src/*
-            git config --global user.name "Github Actions" && git config --global user.email "<>"
-            git pull
-            git add .
-            git commit -m '[CI] Updated README.md.'
-            git push
