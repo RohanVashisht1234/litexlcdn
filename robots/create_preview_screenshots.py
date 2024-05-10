@@ -78,7 +78,7 @@ def generate_html(file_name: str) -> None:
     compiled_json: str = json.dumps(colors_generated, indent=4)
 
     with open(output_file_name, "w", encoding="utf-8") as myfile:
-        with open("./parsers/template.svg", "r", encoding="utf-8") as template_file:
+        with open("./robots/roboassets/template.svg", "r", encoding="utf-8") as template_file:
             content: str = template_file.read()
             content = content.replace(
                 "{{%INSERT VALUE HERE%}}",
