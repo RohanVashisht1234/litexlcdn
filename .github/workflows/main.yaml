@@ -28,6 +28,8 @@ jobs:
         run: rm -rf ./colors/robotGeneratedScreenshots
       - name: Make the images directory for the python's output
         run: mkdir ./colors/robotGeneratedScreenshots
+      - name: Remove the previews directory if it exists
+        run: rm -rf ./colors/robotGeneratedPreviewColors
       - name: Make the images directory for the python's output
         run: mkdir ./colors/robotGeneratedPreviewColors
       - name: Call python code
