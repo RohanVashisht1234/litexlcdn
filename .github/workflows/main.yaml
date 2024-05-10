@@ -1,0 +1,56 @@
+name: Generate Images
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: # Manual trigger
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  generate_images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install python dependencies
+        run: pip install lupa
+      - name: Install lpm
+        run: wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O ./lpm-latest && chmod +x ./lpm-latest
+      - name: Generate lua files inside the directory parsers
+        run: ./lpm-latest --userdir ./colors color install '*'
+      - name: Rename it
+        run: mv ./colors/colors ./colors/src
+      - name: Remove the images directory if it exists
+        run: rm -rf ./colors/robotGeneratedScreenshots
+      - name: Make the images directory for the python's output
+        run: mkdir ./colors/robotGeneratedScreenshots
+      - name: Call python code
+        run: python3 ./robots/main.py
+      - name: Clean up lpm directorie
+        run: rm -rf ./lpm
+      - name: Clean up lpm-latest executable
+        run: rm ./lpm-latest
+      - name: Config email
+        run: git config --global user.name "Github Actions" && git config --global user.email "<>"
+      - name: Git add
+        run: git add .
+      - name: Commit images
+        run: git commit -m '[CI] Updated images'
+      - name: Push changes
+        run: git push
+  generate_previews:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+        - name: Generate table with `lpm`
+          run: |
+            wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm-latest && chmod +x lpm-latest
+            ./lpm-latest exec robots/make_preview_image.lua colors/src/*
+            git config --global user.name "Github Actions" && git config --global user.email "<>"
+            git add .
+            git commit -m '[CI] Updated README.md.'
+            git push
